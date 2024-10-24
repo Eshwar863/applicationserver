@@ -1,0 +1,9 @@
+public Long InterestAmount(LocalDate month){
+//            LocalDateTime Date = month.atStartOfDay();
+//            LocalDateTime endDateTime = month.withDayOfMonth(month.lengthOfMonth()).atTime(LocalTime.MAX);
+//            List<LoanAmount> amount = loanAmountRepo.findInterestAmount(Date,endDateTime);
+//            Long totalInterestAmount = amount.stream()
+//                .mapToLong(LoanAmount::getInterestAmount)
+//               .sum();
+//            return totalInterestAmount;
+//        }
