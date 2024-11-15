@@ -145,4 +145,11 @@ public class UserService implements UserServiceImp {
     }
 
 
+    public ResponseEntity<String> validatepassword(Integer userId, String password) {
+        Optional<Users> users = userRepo.findById(userId);
+        if (users.get().getPassword().equals(password)) {
+            return new ResponseEntity<>("Password Matches",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Password Doesn't Match",HttpStatus.NOT_ACCEPTABLE);
     }
+}

@@ -1,6 +1,7 @@
 package com.example.application.Config;
 
 import com.example.application.Service.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,11 +33,16 @@ public class JwtFilter extends OncePerRequestFilter {
     String authHeader = request.getHeader("Authorization");
     String jwtToken = null;
     String username = null;
-    if (authHeader != null && authHeader.startsWith("Bearer")) {
-        jwtToken = authHeader.substring(7);
-        username = jwtService.extractUserName(jwtToken);
-
-    }
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            jwtToken = authHeader.substring(7);
+            try {
+                username = jwtService.extractUserName(jwtToken);
+            } catch (ExpiredJwtException e) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Token expired");
+                return;
+            }
+        }
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
         UserDetails  userDetails = applicationContext.getBean(UserDetailsService.class).loadUserByUsername(username);
         if (jwtService.validateToken(jwtToken, userDetails)) {

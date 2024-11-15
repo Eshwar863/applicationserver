@@ -122,6 +122,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>Server</finalName>
     </build>
 
 </project>

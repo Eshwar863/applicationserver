@@ -50,7 +50,10 @@ public class UserController {
     public ResponseEntity<?> delUser(@PathVariable (name = "userId") Integer userId){
         return new ResponseEntity<>(userService.DelUser(userId), HttpStatus.OK);
     }
-
+    @PostMapping("{userid}/{password}")
+    public ResponseEntity<String> Validatepassword(@PathVariable(name = "userId") Integer userId,@PathVariable(name = "password") String password){
+        return userService.validatepassword(userId,password);
+    }
     @PutMapping("{userId}/updateuser")
     public ResponseEntity<?> UpdateUser(@RequestBody Users users, @PathVariable (name = "userId") Integer userId){
         ResponseEntity<?> usersdto = userService.UpdateUser(users,userId);
